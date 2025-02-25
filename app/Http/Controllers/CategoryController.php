@@ -44,7 +44,11 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::find($id);
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
+        }
+        return response()->json($category, Response::HTTP_OK);
     }
 
     /**
@@ -52,7 +56,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = Category::find($id);
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
+        }
+        $category->update($request->all());
+        return response()->json($category, Response::HTTP_OK);
     }
 
     /**
@@ -60,6 +69,11 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::find($id);
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
+        }
+        $category->delete();
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
